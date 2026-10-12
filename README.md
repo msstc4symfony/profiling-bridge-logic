@@ -1,73 +1,69 @@
-# msstc4symfony/skeleton-bundle
+# msstc4symfony/profiling-bridge-logic
 
-![Build Status](https://github.com/msstc4symfony/skeleton-bundle/actions/workflows/checks.yml/badge.svg?branch=main)
+![Build Status](https://github.com/msstc4symfony/profiling-bridge-logic/actions/workflows/checks.yml/badge.svg?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Starter template for msstc4symfony Symfony bundles
-
-<!-- init:start -->
-## Using this template
-
-This block, `bin/init` and its test disappear when the template is initialised.
-
-1. On GitHub: **Use this template → Create a new repository** named `msstc4symfony/<name>-bundle`, then clone it.
-2. `php bin/init OutboxInbox "Transactional outbox and inbox for Messenger"` — PascalCase name without
-   the `Bundle` suffix. It renames the namespace, package, config alias and description, resets the
-   changelog, refreshes `composer-ci.lock` and fails if anything named after the template is left.
-3. The Infection thresholds in `checks.yml` are the template's: re-measure them (`make infection`) for the new bundle.
-   A `vendor/` installed before `bin/init` has the old namespace: rerun `COMPOSER=composer-ci.json composer install`.
-   Then replace the `Greet` example with real code, review `git diff`, then `git add -A && git commit -m "init commit"`.
-4. Green CI, then release `v1.0.0` as usual.
-<!-- init:end -->
+Opens a [profiling-bundle](https://github.com/msstc4symfony/profiling-bundle) span around every
+[logic-bundle](https://github.com/msstc4symfony/logic-bundle) Action run, so Actions show up in the span tree
+of the request, command or message that called them.
 
 ## Compatibility
 
-| Bundle | PHP  | Symfony  |
-|--------|------|----------|
-| 1.x    | 8.4+ | 7.4, 8.x |
+| Bundle | PHP  | Symfony  | logic-bundle | profiling-bundle |
+|--------|------|----------|--------------|------------------|
+| 1.x    | 8.4+ | 7.4, 8.x | ^1.1         | ^1.0             |
 
 ## Installation
 
-The package is not on Packagist yet, so register its GitHub repository first:
+The packages are not on Packagist yet, so register their GitHub repositories first:
 
 ```sh
-composer config repositories.msstc4symfony-skeleton-bundle vcs https://github.com/msstc4symfony/skeleton-bundle
-composer require msstc4symfony/skeleton-bundle
+composer config repositories.msstc4symfony-logic vcs https://github.com/msstc4symfony/logic-bundle
+composer config repositories.msstc4symfony-profiling vcs https://github.com/msstc4symfony/profiling-bundle
+composer config repositories.msstc4symfony-profiling-bridge-logic vcs https://github.com/msstc4symfony/profiling-bridge-logic
+composer require msstc4symfony/profiling-bridge-logic
 ```
 
-Symfony Flex registers the bundle automatically; without Flex add it to `config/bundles.php`:
+Register the bridge in `config/bundles.php` alongside the two bundles it connects (order does not matter):
 
 ```php
-Msstc4Symfony\SkeletonBundle\SkeletonBundle::class => ['all' => true],
+Msstc4Symfony\ProfilingBundle\ProfilingBundle::class => ['all' => true],
+Msstc4Symfony\LogicBundle\LogicBundle::class => ['all' => true],
+Msstc4Symfony\ProfilingBridgeLogic\ProfilingBridgeLogicBundle::class => ['all' => true],
 ```
 
-## Configuration
+Nothing to configure. Without ProfilingBundle the container fails to compile: `ProfilingMiddleware` cannot be
+autowired, as no `ProfilingFactoryInterface` service exists.
+
+## The span
+
+- Message: `action <name>`, where `<name>` is the name logic-bundle uses in its logs (`ActionNameResolver`):
+  the Action class, unless an `ActionNameBuilderInterface` service supports it. A name builder that throws falls
+  back to the Action class instead of failing the Action.
+- End context: `outcome` — `success`, `expected_failure` or `error`, as logic-bundle's `ActionOutcome`
+  classifies the exception — plus `exception` (its `get_debug_type()`, so `DomainException@anonymous` for an
+  anonymous class) when the Action threw.
+- An Action called from another Action gets a child span of the caller's span.
+- The exception is always rethrown unchanged; profiling-bundle logs failures of its own processors instead of throwing them.
+
+The bridge is an Action middleware at priority 500, the outermost one: the span also covers
+[metrics-bridge-logic](https://github.com/msstc4symfony/metrics-bridge-logic) (400), logging (300),
+validation (200) and lock (100).
+
+Select Action spans by their prefix with profiling-bundle's span lists, for example to skip health checks:
 
 ```yaml
-msstc4symfony_skeleton:
-    greeting: Hello   # non-empty string
+msstc4symfony_profiling:
+    spans:
+        blacklist: ['action App\Application\Health']
 ```
 
-## Usage
-
-```php
-use Msstc4Symfony\SkeletonBundle\Application\Greeting\Greet\Action;
-use Msstc4Symfony\SkeletonBundle\Application\Greeting\Greet\Input;
-
-final readonly class Welcome
-{
-    public function __construct(private Action $greet)
-    {
-    }
-
-    public function __invoke(): string
-    {
-        return ($this->greet)(new Input('Ada'))->message; // "Hello, Ada!"
-    }
-}
-```
+With [metrics-bridge-profiling](https://github.com/msstc4symfony/metrics-bridge-profiling) these spans also become
+observations of `symfony_profiling_span_duration_histogram_seconds`.
 
 ## Local development
+
+`composer-ci.json` installs logic-bundle and profiling-bundle from their GitHub repositories.
 
 ```sh
 make install-ci                        # composer-ci.json profile with every CI tool
