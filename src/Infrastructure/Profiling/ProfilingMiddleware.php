@@ -22,10 +22,10 @@ use Throwable;
 #[AsActionMiddleware(priority: self::PRIORITY)]
 final readonly class ProfilingMiddleware implements ActionMiddlewareInterface
 {
-    public const int PRIORITY = 500;
+    public const PRIORITY = 500;
 
     // A stable prefix lets msstc4symfony_profiling.spans.whitelist|blacklist select Action spans.
-    public const string SPAN_PREFIX = 'action ';
+    public const SPAN_PREFIX = 'action ';
 
     public function __construct(
         private ProfilingFactoryInterface $profiling,

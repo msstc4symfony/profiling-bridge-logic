@@ -7,7 +7,7 @@ Guidance for Claude Code in this repository. Deep references live under `.claude
 Symfony bundle (`msstc4symfony/profiling-bridge-logic`, namespace `Msstc4Symfony\ProfilingBridgeLogic`, extension
 alias `msstc4symfony_profiling_bridge_logic`, no configuration tree) that connects `msstc4symfony/logic-bundle` to
 `msstc4symfony/profiling-bundle`: every Action run gets an `action <name>` span, ended with its outcome.
-PHP >= 8.4, Symfony 7.4 / 8.x.
+PHP >= 8.2, Symfony 7.4 / 8.x.
 
 ## Common commands
 

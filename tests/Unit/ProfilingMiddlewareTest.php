@@ -80,7 +80,7 @@ final class ProfilingMiddlewareTest extends TestCase
 
     public function testUsesTheResolvedActionName(): void
     {
-        $names = new ActionNameResolver([new readonly class implements ActionNameBuilderInterface {
+        $names = new ActionNameResolver([new class implements ActionNameBuilderInterface {
             public function build(string $actionClass): string
             {
                 return 'echo';
@@ -99,7 +99,7 @@ final class ProfilingMiddlewareTest extends TestCase
 
     public function testABrokenNameBuilderFallsBackToTheActionClass(): void
     {
-        $names = new ActionNameResolver([new readonly class implements ActionNameBuilderInterface {
+        $names = new ActionNameResolver([new class implements ActionNameBuilderInterface {
             public function build(string $actionClass): string
             {
                 throw new RuntimeException('broken builder');
@@ -137,7 +137,7 @@ final class ProfilingMiddlewareTest extends TestCase
     {
         self::assertTrue($this->middleware->supports(ActionContext::of(EchoAction::class)));
         self::assertSame(500, ProfilingMiddleware::PRIORITY);
-        $attribute = new ReflectionClass(ProfilingMiddleware::class)->getAttributes(AsActionMiddleware::class)[0] ?? null;
+        $attribute = (new ReflectionClass(ProfilingMiddleware::class))->getAttributes(AsActionMiddleware::class)[0] ?? null;
         self::assertNotNull($attribute);
         self::assertSame(500, $attribute->newInstance()->priority);
     }

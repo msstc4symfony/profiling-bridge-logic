@@ -40,7 +40,7 @@ final class KernelBridgeTest extends TestCase
 
             return false;
         }, E_USER_DEPRECATED);
-        new Filesystem()->remove(TestKernel::cacheRoot());
+        (new Filesystem())->remove(TestKernel::cacheRoot());
         $this->exceptionHandlers = ExceptionHandlerSnapshot::take();
         $this->kernel = new TestKernel('test', false);
         $this->kernel->boot();
@@ -60,7 +60,7 @@ final class KernelBridgeTest extends TestCase
             $this->exceptionHandlers->restore();
         }
 
-        new Filesystem()->remove(TestKernel::cacheRoot());
+        (new Filesystem())->remove(TestKernel::cacheRoot());
     }
 
     public function testAnActionCallEndsOneSpan(): void
@@ -92,7 +92,7 @@ final class KernelBridgeTest extends TestCase
         // Reads ActionPipeline's private middleware list: logic-bundle exposes no public order; see known-issues.md.
         $pipeline = $this->container()->get(EchoAction::class);
         self::assertInstanceOf(ActionPipeline::class, $pipeline);
-        $middlewares = new ReflectionProperty($pipeline, 'middlewares')->getValue($pipeline);
+        $middlewares = (new ReflectionProperty($pipeline, 'middlewares'))->getValue($pipeline);
         self::assertIsIterable($middlewares);
         $classes = [];
         foreach ($middlewares as $middleware) {
