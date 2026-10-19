@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7dfd84efcd0e578cec40bf615a09551b",
+    "content-hash": "a99a4bd5db270a7c927deab71dbf599b",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -113,16 +113,16 @@
         },
         {
             "name": "msstc4symfony/logic-bundle",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/msstc4symfony/logic-bundle.git",
-                "reference": "8e9152a8b6e1f11d46d2526643a6cbcefe6136bd"
+                "reference": "acab50177f3c7191fd0994103f8bd8f212ce359e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/msstc4symfony/logic-bundle/zipball/8e9152a8b6e1f11d46d2526643a6cbcefe6136bd",
-                "reference": "8e9152a8b6e1f11d46d2526643a6cbcefe6136bd",
+                "url": "https://api.github.com/repos/msstc4symfony/logic-bundle/zipball/acab50177f3c7191fd0994103f8bd8f212ce359e",
+                "reference": "acab50177f3c7191fd0994103f8bd8f212ce359e",
                 "shasum": ""
             },
             "require": {
@@ -183,22 +183,22 @@
                 "use-case"
             ],
             "support": {
-                "source": "https://github.com/msstc4symfony/logic-bundle/tree/v1.2.0"
+                "source": "https://github.com/msstc4symfony/logic-bundle/tree/v1.3.0"
             },
-            "time": "2026-10-14T16:15:27+00:00"
+            "time": "2026-10-19T06:51:05+00:00"
         },
         {
             "name": "msstc4symfony/profiling-bundle",
-            "version": "v1.1.0",
+            "version": "v2.0.0-rc.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/msstc4symfony/profiling-bundle.git",
-                "reference": "a34f386c7a747a99400bae14191a8110b489fa36"
+                "reference": "6a233f272768af10006abaccb1a5aa562e231738"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/msstc4symfony/profiling-bundle/zipball/a34f386c7a747a99400bae14191a8110b489fa36",
-                "reference": "a34f386c7a747a99400bae14191a8110b489fa36",
+                "url": "https://api.github.com/repos/msstc4symfony/profiling-bundle/zipball/6a233f272768af10006abaccb1a5aa562e231738",
+                "reference": "6a233f272768af10006abaccb1a5aa562e231738",
                 "shasum": ""
             },
             "require": {
@@ -268,9 +268,9 @@
                 "symfony"
             ],
             "support": {
-                "source": "https://github.com/msstc4symfony/profiling-bundle/tree/v1.1.0"
+                "source": "https://github.com/msstc4symfony/profiling-bundle/tree/v2.0.0-rc.1"
             },
-            "time": "2026-10-14T16:56:40+00:00"
+            "time": "2026-10-19T07:01:28+00:00"
         },
         {
             "name": "psr/cache",
@@ -12441,6 +12441,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "msstc4symfony/profiling-bundle": 5,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

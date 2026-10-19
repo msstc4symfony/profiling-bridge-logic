@@ -47,3 +47,8 @@
   (или `--prefer-lowest`, как ячейка CI), не `install`.
 - **PhpStorm (`.idea/php.xml` на уровне монорепо) стоит на языке 8.5**: его инспекции предлагают вернуть типы
   констант и убрать скобки у `new` — для пакетов на 8.2 это шум, не применять.
+
+- `tests/Integration/KernelBridgeTest` читает `ActionPipeline::$middlewares` рефлексией и ссылается на
+  `LoggingMiddleware` — оба вне Public API logic-bundle и станут `@internal` в logic 2.0: при переходе на logic `^2.0`
+  тест сломается или потребует публичного способа узнать порядок middleware.
+

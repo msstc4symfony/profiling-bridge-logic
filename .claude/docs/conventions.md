@@ -1,6 +1,8 @@
 # Соглашения
 
-- Код бриджа — в `src/Infrastructure/Profiling/`; Application-слоя нет.
+- Код бриджа — в `src/Infrastructure/Profiling/`; Application-слоя нет. Раскладка и правила семейства — спек этапа B
+  (`docs/superpowers/specs/2026-10-17-stage-b-conventions-design.md` в корне msstc4symfony).
+- Constraint на rc зависимости — `^2.0@rc` только в rc-релизе моста; в финальном — `^2.0`.
 - Тесты: `tests/Unit/<Класс>Test.php` с `#[CoversClass]`; unit-тест middleware использует настоящий `ProfilingFactory`
   (`SpanAssembler([])` пропускает все спаны) и шпиона `tests/Fixtures/RecordingEndProcessor` (тип записи —
   `@phpstan-type EndedSpanShape`, читать через `ended()`, ожидание для спана верхнего уровня — `topLevelSpan()`).

@@ -11,7 +11,8 @@ of the request, command or message that called them.
 
 | Bundle | PHP  | Symfony  | logic-bundle | profiling-bundle |
 |--------|------|----------|--------------|------------------|
-| 1.1+   | 8.2+ | 7.4, 8.x | ^1.2         | ^1.1             |
+| 2.0    | 8.2+ | 7.4, 8.x | ^1.3         | ^2.0             |
+| 1.1    | 8.2+ | 7.4, 8.x | ^1.2         | ^1.1             |
 | 1.0    | 8.4+ | 7.4, 8.x | ^1.1         | ^1.0             |
 
 Symfony 8.x needs PHP 8.4; on PHP 8.2 and 8.3 Composer installs Symfony 7.4.
@@ -63,6 +64,11 @@ msstc4symfony_profiling:
 
 With [metrics-bridge-profiling](https://github.com/msstc4symfony/metrics-bridge-profiling) these spans also become
 observations of `symfony_profiling_span_duration_histogram_seconds`.
+
+## Public API
+
+Only the bundle class `Msstc4Symfony\ProfilingBridgeLogic\ProfilingBridgeLogicBundle`; the middleware is `@internal`
+and is wired by the bundle.
 
 ## Local development
 

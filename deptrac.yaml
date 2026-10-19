@@ -1,3 +1,7 @@
+# Canonical layers of the msstc4symfony bundle standard (stage B spec, section 2).
+# Copy as-is; replace the BundleRoot value with ^<bundle class>$ (deptrac reads an unanchored regex: anchors and
+# doubled backslashes, e.g. ^Msstc4Symfony\\FooBundle\\FooBundle$).
+# A bundle may drop dependencies from the ruleset, never add them.
 deptrac:
     paths:
         - ./src
@@ -41,28 +45,10 @@ deptrac:
         - name: BundleRoot
           collectors:
               - type: classLike
-                value: Msstc4Symfony\\ProfilingBridgeLogic\\ProfilingBridgeLogicBundle
+                value: ^Msstc4Symfony\\ProfilingBridgeLogic\\ProfilingBridgeLogicBundle$
 
     ruleset:
-        Domain: ~
-        DomainService:
-            - Domain
-        Application:
-            - Domain
-            - DomainService
-        # Adapters implement Domain repositories and Application ports.
-        Infrastructure:
-            - Domain
-            - Application
-        Presentation:
-            - Domain
-            - Application
-        Framework:
-            - Domain
-            - Application
-        DependencyInjection:
-            - Application
-        # The bundle class may register autoconfiguration for Application interfaces.
-        BundleRoot:
-            - Application
-            - DependencyInjection
+        # The logic middleware opening profiling spans depends on nothing else in the bridge.
+        Infrastructure: ~
+
+        BundleRoot: ~

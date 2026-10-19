@@ -12,12 +12,14 @@ use Msstc4Symfony\LogicBundle\Application\Action\OutputInterface;
 use Msstc4Symfony\LogicBundle\Application\Pipeline\ActionContext;
 use Msstc4Symfony\LogicBundle\Application\Pipeline\ActionMiddlewareInterface;
 use Msstc4Symfony\LogicBundle\Application\Pipeline\Attribute\AsActionMiddleware;
-use Msstc4Symfony\ProfilingBundle\Framework\ProfilingFactoryInterface;
+use Msstc4Symfony\ProfilingBundle\Application\ProfilingFactoryInterface;
 use Override;
 use Throwable;
 
 /**
  * Outermost, so the span also covers the metrics bridge and everything inside it.
+ *
+ * @internal
  */
 #[AsActionMiddleware(priority: self::PRIORITY)]
 final readonly class ProfilingMiddleware implements ActionMiddlewareInterface

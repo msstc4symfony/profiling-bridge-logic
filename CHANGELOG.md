@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0-rc.1 - 2026-10-19
+
+- Changed: requires profiling-bundle ^2.0 (`^2.0@rc` until profiling 2.0.0 is final; `Application\ProfilingFactoryInterface` replaces
+  `Framework\ProfilingFactoryInterface` in the `ProfilingMiddleware` constructor) and logic-bundle ^1.3.
+- Changed: `ProfilingMiddleware` is `@internal`; the public API is the bundle class (README "Public API").
+- Changed: PHPStan enforces `#[\Override]` (`checkMissingOverrideMethodAttribute`); adopts bundle-standard v3
+  (canonical deptrac layers, anchored `BundleRoot`).
+
 ## 1.1.0 - 2026-10-14
 
 - Changed: requires PHP 8.2 instead of 8.4 (Symfony 8 still needs PHP 8.4).

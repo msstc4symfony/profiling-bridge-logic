@@ -19,8 +19,9 @@ use Msstc4Symfony\ProfilingBridgeLogic\Test\Fixtures\EchoOutput;
 use Msstc4Symfony\ProfilingBridgeLogic\Test\Fixtures\FailingAction;
 use Msstc4Symfony\ProfilingBridgeLogic\Test\Fixtures\InnerAction;
 use Msstc4Symfony\ProfilingBridgeLogic\Test\Fixtures\RecordingEndProcessor;
-use Msstc4Symfony\ProfilingBundle\Framework\Assembler\SpanAssembler;
-use Msstc4Symfony\ProfilingBundle\Framework\ProfilingFactory;
+use Msstc4Symfony\ProfilingBundle\Application\Assembler\SpanAssembler;
+use Msstc4Symfony\ProfilingBundle\Application\ProfilingFactory;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
@@ -34,6 +35,7 @@ final class ProfilingMiddlewareTest extends TestCase
 
     private ProfilingMiddleware $middleware;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->recorder = new RecordingEndProcessor();
@@ -81,11 +83,13 @@ final class ProfilingMiddlewareTest extends TestCase
     public function testUsesTheResolvedActionName(): void
     {
         $names = new ActionNameResolver([new class implements ActionNameBuilderInterface {
+            #[Override]
             public function build(string $actionClass): string
             {
                 return 'echo';
             }
 
+            #[Override]
             public function supports(string $actionClass): bool
             {
                 return true;
@@ -100,11 +104,13 @@ final class ProfilingMiddlewareTest extends TestCase
     public function testABrokenNameBuilderFallsBackToTheActionClass(): void
     {
         $names = new ActionNameResolver([new class implements ActionNameBuilderInterface {
+            #[Override]
             public function build(string $actionClass): string
             {
                 throw new RuntimeException('broken builder');
             }
 
+            #[Override]
             public function supports(string $actionClass): bool
             {
                 return true;

@@ -13,6 +13,7 @@ use Msstc4Symfony\ProfilingBridgeLogic\Test\Fixtures\ExceptionHandlerSnapshot;
 use Msstc4Symfony\ProfilingBridgeLogic\Test\Fixtures\FailingAction;
 use Msstc4Symfony\ProfilingBridgeLogic\Test\Fixtures\RecordingEndProcessor;
 use Msstc4Symfony\ProfilingBridgeLogic\Test\Integration\Kernel\TestKernel;
+use Override;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
@@ -30,6 +31,7 @@ final class KernelBridgeTest extends TestCase
 
     private ExceptionHandlerSnapshot $exceptionHandlers;
 
+    #[Override]
     protected function setUp(): void
     {
         // trigger_deprecation() silences its notice with @, which PHPUnit ignores; record it directly.
@@ -46,6 +48,7 @@ final class KernelBridgeTest extends TestCase
         $this->kernel->boot();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         restore_error_handler();

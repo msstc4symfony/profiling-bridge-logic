@@ -11,5 +11,9 @@
   - Вложенный Action получает дочерний спан: родителя ставит стек `ProfilingFactory`, middleware ничего не передаёт.
 - Сервисы приватные, id = FQCN. Без ProfilingBundle контейнер не компилируется (нет `ProfilingFactoryInterface`) —
   отдельного compiler pass нет, ошибка автовайринга достаточно понятна.
-- deptrac: код только в Infrastructure; BundleRoot от него не зависит (`services.php` — не класс).
+- deptrac: шаблон bundle-standard v3 (с 2.0), BundleRoot `^…\\ProfilingBridgeLogicBundle$`; код только в
+  Infrastructure, ruleset `Infrastructure: ~`, `BundleRoot: ~`.
+- Мажор 2.0: конструктор `ProfilingMiddleware` типизирован `ProfilingFactoryInterface` profiling-bundle, который в
+  profiling 2.0 сменил namespace (`Framework\` → `Application\`) — Roave BC check считает это поломкой моста, поэтому
+  мост тоже мажор (решение владельца 2026-10-19 UTC). `ProfilingMiddleware` — `@internal`, публичный API — бандл-класс.
 - Имя и исход Action берутся из logic-bundle (`ActionNameResolver`, `ActionOutcome`), чтобы логи, метрики и спаны совпадали.
