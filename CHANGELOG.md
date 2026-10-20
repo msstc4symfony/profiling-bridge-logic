@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0 - 2026-10-20
+
+- Changed: requires the final 2.0 releases (`^2.0` instead of `^2.0@rc`).
+
 ## 2.0.0-rc.1 - 2026-10-19
 
 - Changed: requires profiling-bundle ^2.0 (`^2.0@rc` until profiling 2.0.0 is final; `Application\ProfilingFactoryInterface` replaces

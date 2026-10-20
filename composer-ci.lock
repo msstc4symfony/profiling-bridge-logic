@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a99a4bd5db270a7c927deab71dbf599b",
+    "content-hash": "0584cc943bd4036ab9facca5a6450444",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -189,16 +189,16 @@
         },
         {
             "name": "msstc4symfony/profiling-bundle",
-            "version": "v2.0.0-rc.1",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/msstc4symfony/profiling-bundle.git",
-                "reference": "6a233f272768af10006abaccb1a5aa562e231738"
+                "reference": "67de82cc34bdd92e88ce99a74a240df6d42a504c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/msstc4symfony/profiling-bundle/zipball/6a233f272768af10006abaccb1a5aa562e231738",
-                "reference": "6a233f272768af10006abaccb1a5aa562e231738",
+                "url": "https://api.github.com/repos/msstc4symfony/profiling-bundle/zipball/67de82cc34bdd92e88ce99a74a240df6d42a504c",
+                "reference": "67de82cc34bdd92e88ce99a74a240df6d42a504c",
                 "shasum": ""
             },
             "require": {
@@ -268,9 +268,9 @@
                 "symfony"
             ],
             "support": {
-                "source": "https://github.com/msstc4symfony/profiling-bundle/tree/v2.0.0-rc.1"
+                "source": "https://github.com/msstc4symfony/profiling-bundle/tree/v2.0.0"
             },
-            "time": "2026-10-19T07:01:28+00:00"
+            "time": "2026-10-20T10:25:04+00:00"
         },
         {
             "name": "psr/cache",
@@ -12441,7 +12441,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "msstc4symfony/profiling-bundle": 5,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
