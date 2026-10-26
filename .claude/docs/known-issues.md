@@ -11,9 +11,9 @@
   не логируется: логгера у middleware нет, а сообщить о сломанном builder — дело логирования logic-bundle.
 - **`ProfilingFactory::createSpan()`/`endSpan()` сами глушат сбои** ассемблеров, процессоров и end-хендлеров
   (логируют), поэтому middleware их не оборачивает. Декоратор фабрики, который бросает, это нарушит.
-- **`KernelBridgeTest::testTheMiddlewareRunsOutsideLogging` читает приватное `ActionPipeline::$middlewares`**
-  через reflection — публичного API порядка у logic-bundle нет. Если тест упадёт после minor-обновления logic-bundle,
-  сначала проверить, не переименовали ли свойство.
+- **`KernelBridgeTest` читает порядок middleware через `MiddlewareChainInterface::middlewares()`** (logic-bundle
+  2.1.0; раньше — рефлексией по приватному `ActionPipeline::$middlewares`). При logic < 2.1 (prefer-lowest на 1.3) такие
+  тесты помечаются skipped, ограничение `^1.3|^2.0` не поднято.
 - **Имя Action резолвится до трёх раз за вызов** (логирование, профилирование и metrics-bridge-logic, если он
   установлен). Дёшево; мемоизировать по `actionClass` имеет смысл, только если профилирование покажет горячую точку.
 
@@ -48,7 +48,6 @@
 - **PhpStorm (`.idea/php.xml` на уровне монорепо) стоит на языке 8.5**: его инспекции предлагают вернуть типы
   констант и убрать скобки у `new` — для пакетов на 8.2 это шум, не применять.
 
-- `tests/Integration/KernelBridgeTest` читает `ActionPipeline::$middlewares` рефлексией и ссылается на
-  `LoggingMiddleware` — оба вне Public API logic-bundle и станут `@internal` в logic 2.0: при переходе на logic `^2.0`
-  тест сломается или потребует публичного способа узнать порядок middleware.
+- `tests/Integration/KernelBridgeTest` ссылается на `LoggingMiddleware` (`@internal` в logic 2.0): его переименование
+  сломает тест, не код моста.
 
